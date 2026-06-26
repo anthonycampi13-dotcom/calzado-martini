@@ -1,0 +1,741 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calzado Martini — Elegancia en cada paso</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+  ESTRUCTURA DE ARCHIVOS NECESARIA
+  📁 Tu carpeta del proyecto
+    ├── calzado_martini_groq.html   ← este archivo
+    ├── Code_v2_groq.gs             ← Google Apps Script (sube a GAS)
+    └── 📁 imagenes
+          ├── logo1.png  ├── coleccion.png  ├── coleccion2.png
+          ├── CAB-001.jpg ... DAM-012.jpg
+============================================================ -->
+
+<style>
+:root{
+  --navy:#1a2d5a;--navy-l:#243d78;--navy-d:#0e1e3d;
+  --gold:#c9a96e;--gold-l:#e8cfa0;--cream:#f8f5f0;
+  --white:#ffffff;--td:#1a1a2e;--tm:#4a4a6a;--tl:#8a8aaa;
+  --sh:0 8px 30px rgba(26,45,90,.10);--shl:0 20px 60px rgba(26,45,90,.15);
+  --t:all .4s cubic-bezier(.25,.46,.45,.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--td);overflow-x:hidden}
+#pcv{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.35}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:72px;background:rgba(26,45,90,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,169,110,.3);transition:height .3s}
+.nlogo img{height:44px;filter:brightness(0) invert(1)}
+.nlinks{display:flex;gap:2.5rem;list-style:none}
+.nlinks a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:color .3s;position:relative;padding-bottom:4px}
+.nlinks a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.nlinks a:hover{color:var(--gold)}.nlinks a:hover::after{width:100%}
+.ncta{background:var(--gold)!important;color:var(--navy-d)!important;padding:8px 22px!important;border-radius:2px;font-weight:600!important}
+.ncta:hover{background:var(--gold-l)!important}.ncta::after{display:none!important}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:linear-gradient(135deg,var(--navy-d) 0%,var(--navy) 50%,#2a4a8a 100%)}
+.hbg{position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(201,169,110,.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(201,169,110,.05) 0%,transparent 40%),repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(255,255,255,.012) 40px,rgba(255,255,255,.012) 80px)}
+.hcont{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:8rem 4rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.htxt{animation:fadeUp 1s ease both}
+.eyebrow{display:inline-block;color:var(--gold);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;font-weight:600;margin-bottom:1.2rem;border-left:2px solid var(--gold);padding-left:12px}
+.htitle{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5rem);color:#fff;line-height:1.1;margin-bottom:1.5rem;font-weight:700}
+.htitle em{font-style:italic;color:var(--gold-l)}
+.hsub{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:2.5rem;font-style:italic}
+.hbtns{display:flex;gap:1rem;flex-wrap:wrap}
+.btnp{background:var(--gold);color:var(--navy-d);padding:14px 32px;border:none;border-radius:2px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:var(--t)}
+.btnp:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,169,110,.4)}
+.btno{background:transparent;color:#fff;padding:14px 32px;border:1px solid rgba(255,255,255,.4);border-radius:2px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:var(--t)}
+.btno:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.hvis{display:flex;justify-content:center;align-items:center;animation:fadeUp 1s ease .3s both}
+.hframe{position:relative;width:420px;height:420px;display:flex;align-items:center;justify-content:center}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(201,169,110,.2);animation:spin 30s linear infinite;width:100%;height:100%}
+.ring2{width:80%;height:80%;border-style:dashed;border-color:rgba(201,169,110,.12);animation-direction:reverse;animation-duration:20s}
+.hlogo{width:280px;height:auto;filter:brightness(0) invert(1);position:relative;z-index:2;animation:float 6s ease-in-out infinite}
+.hstats{display:flex;gap:2rem;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1)}
+.stat .num{display:block;font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700}
+.stat .lbl{font-size:.7rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase}
+.sind{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.4);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;animation:bounce 2s ease-in-out infinite}
+.sind::after{content:'';width:1px;height:40px;background:linear-gradient(to bottom,rgba(201,169,110,.6),transparent)}
+.fband{background:var(--navy);padding:3rem 4rem;display:grid;grid-template-columns:repeat(4,1fr)}
+.fitem{padding:2rem;display:flex;align-items:flex-start;gap:1rem;border-right:1px solid rgba(255,255,255,.08);transition:var(--t)}
+.fitem:last-child{border-right:none}.fitem:hover{background:rgba(255,255,255,.04)}
+.ficon{font-size:2rem;flex-shrink:0;line-height:1}
+.fitem h3{color:var(--gold-l);font-size:.85rem;font-weight:600;letter-spacing:.05em;margin-bottom:.4rem;text-transform:uppercase}
+.fitem p{color:rgba(255,255,255,.5);font-size:.78rem;line-height:1.6}
+section{position:relative;z-index:1}
+.cat{padding:6rem 4rem;max-width:1400px;margin:0 auto}
+.shdr{text-align:center;margin-bottom:4rem}
+.sey{display:inline-block;color:var(--gold);font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;font-weight:600;margin-bottom:1rem}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(2rem,3vw,2.8rem);color:var(--navy);line-height:1.2;font-weight:700}
+.stitle em{font-style:italic;color:var(--navy-l)}
+.sline{width:60px;height:2px;background:var(--gold);margin:1.5rem auto 0}
+.filters{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:3rem;justify-content:center}
+.fb{padding:10px 24px;border:1.5px solid rgba(26,45,90,.2);border-radius:2px;background:transparent;color:var(--tm);font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:var(--t)}
+.fb:hover,.fb.act{background:var(--navy);border-color:var(--navy);color:#fff}
+.fb.act{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem}
+.pcard{background:var(--white);border-radius:4px;overflow:hidden;box-shadow:var(--sh);transition:var(--t);cursor:pointer}
+.pcard:hover{transform:translateY(-8px);box-shadow:var(--shl)}
+.pimg{position:relative;height:220px;background:linear-gradient(135deg,#f0ede8,#e8e4df);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pimg img.prod-photo{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.pcard:hover .pimg img.prod-photo{transform:scale(1.07)}
+.pimg .pemo{font-size:5rem;transition:transform .5s ease}
+.pcard:hover .pemo{transform:scale(1.1) rotate(-5deg)}
+.pbg{position:absolute;top:12px;left:12px;padding:4px 12px;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;z-index:2}
+.pgen{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);color:var(--tm);padding:4px 10px;font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;z-index:2}
+.bf{background:var(--navy);color:#fff}.bc{background:#4a7a4a;color:#fff}.bfi{background:#8a3a6a;color:#fff}
+.pinfo{padding:1.4rem 1.6rem 1.6rem}
+.pname{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);font-weight:600;margin-bottom:.3rem;line-height:1.3}
+.pmat{font-size:.72rem;color:var(--tl);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.8rem}
+.pcolors{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+.cdot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(0,0,0,.1)}
+.pfoot{display:flex;align-items:center;justify-content:space-between}
+.pprice{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--navy);font-weight:700}
+.pprice span{font-size:.8rem;color:var(--tl);font-family:'Montserrat',sans-serif;font-weight:400}
+.psz{font-size:.65rem;color:var(--tl);text-align:right;line-height:1.4}
+.pcta{margin-top:1rem;width:100%;padding:10px;background:var(--navy);color:#fff;border:none;border-radius:2px;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:var(--t)}
+.pcta:hover{background:var(--gold);color:var(--navy-d)}
+.aband{background:var(--navy);padding:6rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.aband .stitle{color:#fff}.aband .stitle em{color:var(--gold-l)}
+.aband p{color:rgba(255,255,255,.65);line-height:1.9;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;margin-top:1.5rem}
+.aimg{position:relative;display:flex;align-items:center;justify-content:center}
+.aimg img{width:100%;max-width:520px;height:auto;border-radius:4px;opacity:.9}
+.aimg::before{content:'';position:absolute;top:-20px;left:-20px;width:100%;height:100%;border:1px solid rgba(201,169,110,.3);border-radius:4px;z-index:0}
+.testi{padding:6rem 4rem;text-align:center}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1100px;margin:3rem auto 0}
+.tcard{background:var(--white);padding:2.5rem 2rem;border-radius:4px;box-shadow:var(--sh);position:relative;text-align:left;transition:var(--t)}
+.tcard:hover{transform:translateY(-4px);box-shadow:var(--shl)}
+.tcard::before{content:'"';font-family:'Playfair Display',serif;font-size:5rem;color:var(--gold);opacity:.3;position:absolute;top:.5rem;left:1.2rem;line-height:1}
+.ttxt{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--tm);line-height:1.8;font-style:italic;margin-bottom:1.5rem}
+.tauth{font-size:.78rem;font-weight:600;color:var(--navy)}.trole{font-size:.7rem;color:var(--tl);margin-top:2px}
+.stars{color:var(--gold);font-size:.9rem;margin-bottom:1rem}
+footer{background:var(--navy-d);color:rgba(255,255,255,.5);padding:4rem 4rem 2rem}
+.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.fbrand p{font-size:.82rem;line-height:1.7;max-width:280px}
+.fcol h4{color:var(--gold-l);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.2rem;font-weight:600}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.fcol a{color:rgba(255,255,255,.45);text-decoration:none;font-size:.82rem;transition:color .2s}
+.fcol a:hover{color:var(--gold)}
+.fbot{display:flex;justify-content:space-between;align-items:center;font-size:.72rem}
+.fbot span{color:rgba(255,255,255,.25)}
+/* ── Chat ── */
+.ctrig{position:fixed;bottom:2rem;right:2rem;z-index:9000;width:64px;height:64px;background:var(--gold);border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 8px 30px rgba(201,169,110,.5);transition:var(--t);animation:cpulse 3s ease-in-out infinite}
+.ctrig:hover{transform:scale(1.1);background:var(--gold-l)}
+.cbadge{position:absolute;top:-4px;right:-4px;width:20px;height:20px;background:#e74c3c;border-radius:50%;border:2px solid var(--cream);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#fff;font-weight:700}
+.cwin{position:fixed;bottom:7rem;right:2rem;width:400px;height:600px;background:var(--white);border-radius:16px;box-shadow:0 30px 80px rgba(26,45,90,.25);z-index:9000;display:flex;flex-direction:column;overflow:hidden;transform:scale(.8) translateY(20px);opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.cwin.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chdr{background:linear-gradient(135deg,var(--navy),var(--navy-l));padding:1rem 1.4rem;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.cavt{width:44px;height:44px;border-radius:50%;background:rgba(201,169,110,.2);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.chinfo h3{color:#fff;font-size:.9rem;font-weight:600}
+.chinfo p{color:var(--gold-l);font-size:.72rem;display:flex;align-items:center;gap:4px}
+.chinfo p::before{content:'';width:6px;height:6px;border-radius:50%;background:#2ecc71;display:inline-block}
+.cclose{margin-left:auto;background:rgba(255,255,255,.1);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.cclose:hover{background:rgba(255,255,255,.2)}
+.cmsgs{flex:1;overflow-y:auto;padding:1.2rem;display:flex;flex-direction:column;gap:1rem;background:#f7f8fc;scroll-behavior:smooth}
+.cmsgs::-webkit-scrollbar{width:4px}
+.cmsgs::-webkit-scrollbar-thumb{background:rgba(26,45,90,.2);border-radius:2px}
+.msg{display:flex;flex-direction:column;gap:4px;max-width:86%;animation:msgIn .3s ease both}
+.msg.bot{align-self:flex-start}.msg.user{align-self:flex-end}
+.mbub{padding:10px 14px;border-radius:16px;font-size:.83rem;line-height:1.6}
+.msg.bot .mbub{background:#fff;color:var(--td);border-radius:4px 16px 16px 16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.msg.user .mbub{background:var(--navy);color:#fff;border-radius:16px 4px 16px 16px}
+.mtime{font-size:.62rem;color:var(--tl);padding:0 4px}
+.msg.user .mtime{text-align:right}
+.cprod{background:#fff;border:1px solid rgba(26,45,90,.1);border-radius:12px;overflow:hidden;margin-top:4px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.cpimg{height:110px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#f0ede8,#e8e4df)}
+.cpimg img.cp-photo{width:100%;height:100%;object-fit:cover}
+.cpimg .cp-emo{font-size:2.8rem}
+.cpinfo{padding:10px 12px}
+.cpname{font-weight:600;font-size:.8rem;color:var(--navy);margin-bottom:2px}
+.cpdet{font-size:.72rem;color:var(--tl);margin-bottom:3px;line-height:1.4}
+.cpprice{font-size:.98rem;font-weight:700;color:var(--navy);font-family:'Playfair Display',serif}
+.csugg{display:flex;gap:6px;flex-wrap:wrap;padding:.7rem 1.2rem;background:#f7f8fc;flex-shrink:0}
+.sug{padding:6px 12px;background:#fff;border:1px solid rgba(26,45,90,.15);border-radius:20px;font-size:.72rem;color:var(--navy);cursor:pointer;transition:var(--t);white-space:nowrap}
+.sug:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cinp{padding:1rem;border-top:1px solid rgba(26,45,90,.08);display:flex;gap:8px;align-items:flex-end;background:#fff;flex-shrink:0}
+#ci{flex:1;border:1.5px solid rgba(26,45,90,.15);border-radius:24px;padding:10px 16px;font-family:'Montserrat',sans-serif;font-size:.82rem;resize:none;outline:none;max-height:100px;transition:border-color .2s;line-height:1.5}
+#ci:focus{border-color:var(--navy)}
+.sb{width:42px;height:42px;background:var(--navy);border:none;border-radius:50%;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--t);flex-shrink:0}
+.sb:hover{background:var(--gold);color:var(--navy-d)}.sb:disabled{background:#ccc;cursor:not-allowed}
+.tdots{display:flex;gap:4px;align-items:center;padding:4px 0}
+.tdots span{width:6px;height:6px;border-radius:50%;background:var(--navy);opacity:.4;animation:td 1.2s ease-in-out infinite}
+.tdots span:nth-child(2){animation-delay:.2s}.tdots span:nth-child(3){animation-delay:.4s}
+/* ── Config GAS ── */
+.gas-config{background:#f0f4ff;border:1.5px solid rgba(26,45,90,.15);border-radius:8px;padding:.8rem 1rem;margin:.5rem 1.2rem;font-size:.72rem;color:var(--tm)}
+.gas-config input{width:100%;border:1px solid rgba(26,45,90,.2);border-radius:4px;padding:6px 10px;font-size:.75rem;margin-top:6px;outline:none}
+.gas-config button{margin-top:6px;background:var(--navy);color:#fff;border:none;border-radius:4px;padding:6px 14px;font-size:.72rem;cursor:pointer}
+/* ── Comprobante ── */
+.upload-box{background:#fff;border:2px dashed var(--gold);border-radius:12px;padding:1rem;text-align:center;margin-top:6px}
+.upload-box label{display:block;cursor:pointer;font-size:.8rem;color:var(--navy);font-weight:600}
+.upload-box input{display:none}
+.proof-preview{max-width:100%;max-height:120px;border-radius:8px;margin-top:8px;object-fit:cover}
+.upload-box .ubtn{margin-top:8px;background:var(--navy);color:#fff;border:none;border-radius:6px;padding:8px 18px;font-size:.75rem;cursor:pointer;width:100%}
+.upload-box .ubtn:disabled{background:#ccc}
+/* ── Carrito visible ── */
+.cart-box{background:linear-gradient(135deg,#f0f4ff,#e8edf8);border:1.5px solid rgba(26,45,90,.18);border-radius:12px;padding:10px 14px;margin-top:6px}
+.cart-box .cart-title{font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.cart-item{font-size:.75rem;color:var(--td);padding:3px 0;border-bottom:1px solid rgba(26,45,90,.08);display:flex;justify-content:space-between}
+.cart-item:last-of-type{border-bottom:none}
+.cart-price{color:var(--navy);font-weight:600}
+.cart-total{margin-top:6px;font-size:.8rem;font-weight:700;color:var(--navy-d);text-align:right;border-top:1.5px solid rgba(26,45,90,.15);padding-top:6px}
+/* ── Feedback 👍/👎 ── */
+.fbk{display:flex;align-items:center;gap:6px;margin-top:4px;padding:0 2px}
+.fbk span{font-size:.62rem;color:var(--tl)}
+.fbn{background:none;border:1px solid rgba(26,45,90,.15);border-radius:99px;padding:2px 8px;font-size:.72rem;cursor:pointer;transition:all .2s}
+.fbn:hover{background:var(--gold-l);border-color:var(--gold)}
+.fbn.voted{background:var(--gold);border-color:var(--gold);cursor:default}
+/* ── Formulario cliente ── */
+.customer-form{background:#fff;border:1px solid rgba(26,45,90,.12);border-radius:12px;padding:1rem;margin-top:6px}
+.customer-form label{font-size:.72rem;color:var(--tm);display:block;margin-bottom:2px;margin-top:10px}
+.customer-form label:first-child{margin-top:0}
+.customer-form input{width:100%;border:1px solid rgba(26,45,90,.2);border-radius:4px;padding:7px 10px;font-size:.78rem;outline:none;font-family:'Montserrat',sans-serif}
+.customer-form input:focus{border-color:var(--navy)}
+.customer-form .sbtn{margin-top:12px;background:var(--gold);color:var(--navy-d);border:none;border-radius:6px;padding:10px;font-size:.75rem;font-weight:700;cursor:pointer;width:100%;letter-spacing:.05em;text-transform:uppercase}
+/* ── Confirmación pedido ── */
+.order-confirm{background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:1px solid #81c784;border-radius:12px;padding:1rem;margin-top:6px;text-align:center}
+.order-confirm .oc-icon{font-size:2.5rem}
+.order-confirm h4{color:#2e7d32;font-size:.9rem;margin:.5rem 0 .3rem}
+.order-confirm p{font-size:.75rem;color:#388e3c;line-height:1.5}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@keyframes cpulse{0%,100%{box-shadow:0 8px 30px rgba(201,169,110,.5)}50%{box-shadow:0 8px 50px rgba(201,169,110,.8),0 0 0 8px rgba(201,169,110,.1)}}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+@media(max-width:900px){
+  nav{padding:0 1.5rem}.nlinks{display:none}
+  .hcont{grid-template-columns:1fr;padding:7rem 1.5rem 3rem}.hvis{display:none}
+  .fband{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}
+  .cat{padding:3rem 1.5rem}
+  .aband{grid-template-columns:1fr;padding:3rem 1.5rem;gap:2rem}
+  .tgrid{grid-template-columns:1fr}.testi{padding:3rem 1.5rem}
+  .cwin{width:calc(100vw - 2rem);right:1rem;bottom:6rem}
+  .ftop{grid-template-columns:1fr 1fr}
+  footer{padding:3rem 1.5rem 1.5rem}
+}
+</style>
+</head>
+<body>
+<canvas id="pcv"></canvas>
+
+<nav>
+  <div class="nlogo"><img src="imagenes/logo1.png" alt="Calzado Martini"></div>
+  <ul class="nlinks">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="javascript:void(0)" onclick="openChat()" class="ncta">💬 Asesor Virtual</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hbg"></div>
+  <div class="hcont">
+    <div class="htxt">
+      <span class="eyebrow">✦ Colección 2026</span>
+      <h1 class="htitle">Elegancia en<br><em>cada paso</em></h1>
+      <p class="hsub">Calzado de dama y caballero en cuero genuino y cuerina premium. Diseño, confort y distinción para cada ocasión.</p>
+      <div class="hbtns">
+        <a href="#catalogo" class="btnp">Ver Catálogo ↓</a>
+        <a href="javascript:void(0)" onclick="openChat()" class="btno">💬 Hablar con Asesor</a>
+      </div>
+      <div class="hstats">
+        <div class="stat"><span class="num">20+</span><span class="lbl">Modelos</span></div>
+        <div class="stat"><span class="num">6</span><span class="lbl">Tallas</span></div>
+        <div class="stat"><span class="num">15+</span><span class="lbl">Colores</span></div>
+        <div class="stat"><span class="num">100%</span><span class="lbl">Calidad</span></div>
+      </div>
+    </div>
+    <div class="hvis">
+      <div class="hframe">
+        <div class="ring"></div><div class="ring ring2"></div>
+        <img src="imagenes/logo1.png" alt="Martini" class="hlogo">
+      </div>
+    </div>
+  </div>
+  <div class="sind">Descubrir</div>
+</section>
+
+<div class="fband">
+  <div class="fitem"><span class="ficon">🏆</span><div><h3>Calidad Premium</h3><p>Cuero genuino y cuerina de primera selección</p></div></div>
+  <div class="fitem"><span class="ficon">👞</span><div><h3>Amplio Catálogo</h3><p>Dama y caballero — formal, casual y fiesta</p></div></div>
+  <div class="fitem"><span class="ficon">📏</span><div><h3>Tallas 36 al 43</h3><p>Stock completo en todos los modelos</p></div></div>
+  <div class="fitem"><span class="ficon">🤖</span><div><h3>Asesor con IA RAG</h3><p>Consulta el catálogo real vía Groq API</p></div></div>
+</div>
+
+<section class="cat" id="catalogo">
+  <div class="shdr">
+    <span class="sey">✦ Nuestra Colección</span>
+    <h2 class="stitle">Catálogo <em>Martini</em></h2>
+    <div class="sline"></div>
+  </div>
+  <div class="filters">
+    <button class="fb act" onclick="filt('todos',this)">Todos</button>
+    <button class="fb" onclick="filt('caballero',this)">Caballero</button>
+    <button class="fb" onclick="filt('dama',this)">Dama</button>
+    <button class="fb" onclick="filt('formal',this)">Formal</button>
+    <button class="fb" onclick="filt('casual',this)">Casual</button>
+    <button class="fb" onclick="filt('fiesta',this)">Fiesta</button>
+    <button class="fb" onclick="filt('cuero',this)">Cuero genuino</button>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+</section>
+
+<section class="aband" id="nosotros">
+  <div>
+    <span class="sey">✦ Nuestra Historia</span>
+    <h2 class="stitle">Tradición y <em>distinción</em></h2>
+    <div class="sline" style="margin:1.5rem 0 0;text-align:left"></div>
+    <p>En Calzado Martini llevamos años vistiendo los pasos de nuestros clientes con elegancia y calidad incomparable. Cada par es una promesa de confort, estilo y durabilidad.</p>
+    <p style="margin-top:1rem">Nuestra colección abarca desde el zapato formal más clásico hasta la sandalia de fiesta más sofisticada — siempre con la marca Martini como sello de garantía.</p>
+    <div style="margin-top:2rem"><a href="javascript:void(0)" onclick="openChat()" class="btnp">💬 Consultar al Asesor</a></div>
+  </div>
+  <div class="aimg">
+    <img src="imagenes/coleccion.png" alt="Colección Calzado Martini">
+  </div>
+</section>
+
+<section class="testi">
+  <div class="shdr">
+    <span class="sey">✦ Lo que dicen</span>
+    <h2 class="stitle">Nuestros <em>Clientes</em></h2>
+    <div class="sline"></div>
+  </div>
+  <div class="tgrid">
+    <div class="tcard"><div class="stars">★★★★★</div><p class="ttxt">Los Derby de cuero negro son increíbles. Llevo usándolos en la oficina y siguen perfectos. La calidad justifica cada centavo.</p><div class="tauth">Carlos R.</div><div class="trole">Cliente frecuente · Quito</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p class="ttxt">Me encantaron las sandalias de fiesta. Las usé en una boda y recibí muchísimos cumplidos. El asesor virtual me ayudó a elegir el modelo perfecto.</p><div class="tauth">Valentina M.</div><div class="trole">Cliente · Guayaquil</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p class="ttxt">Los loafers de cuero genuino son cómodos desde el primer día. Gran variedad de colores y tallas. Definitivamente mi tienda favorita.</p><div class="tauth">Andrea S.</div><div class="trole">Cliente · Cuenca</div></div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="ftop">
+    <div class="fbrand">
+      <p>Elegancia y calidad en calzado de dama y caballero. Tu mejor elección en cuero genuino y cuerina premium.</p>
+    </div>
+    <div class="fcol"><h4>Catálogo</h4><ul><li><a href="#catalogo">Zapatos Caballero</a></li><li><a href="#catalogo">Zapatos Dama</a></li><li><a href="#catalogo">Colección Formal</a></li><li><a href="#catalogo">Colección Fiesta</a></li></ul></div>
+    <div class="fcol"><h4>Atención</h4><ul><li><a href="javascript:void(0)" onclick="openChat()">Asesor Virtual IA</a></li><li><a href="#">Guía de tallas</a></li><li><a href="#">Cuidado del cuero</a></li><li><a href="#">Devoluciones</a></li></ul></div>
+    <div class="fcol"><h4>Contacto</h4><ul><li><a href="#">📍 Cevallos, Tungurahua, Ecuador</a></li><li><a href="#">📱 WhatsApp</a></li><li><a href="#">📧 info@calzadomartini.com</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2025 Calzado Martini. Todos los derechos reservados.</span><span>Asesor IA con Groq API + RAG</span></div>
+</footer>
+
+<!-- Botón flotante chat -->
+<button class="ctrig" onclick="openChat()" title="Hablar con asesor"><div class="cbadge">1</div>💬</button>
+
+<!-- Ventana de chat -->
+<div class="cwin" id="cwin">
+  <div class="chdr">
+    <div class="cavt">👟</div>
+    <div class="chinfo"><h3>Martín · Asesor IA</h3><p>En línea · Responde al instante</p></div>
+    <button class="cclose" onclick="closeChat()">✕</button>
+  </div>
+  <div class="cmsgs" id="cmsgs"></div>
+  <div class="csugg" id="csugg">
+    <button class="sug" onclick="useSug(this)">Zapatos de caballero</button>
+    <button class="sug" onclick="useSug(this)">Modelos de fiesta</button>
+    <button class="sug" onclick="useSug(this)">¿Qué tallas hay?</button>
+    <button class="sug" onclick="useSug(this)">Cuero genuino</button>
+  </div>
+  <div class="cinp">
+    <textarea id="ci" placeholder="Escribe tu consulta..." rows="1" onkeydown="hkey(event)" oninput="aH(this)"></textarea>
+    <button class="sb" id="sb" onclick="send()">➤</button>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// SECCIÓN 1: CONFIGURACIÓN
+// ================================================================
+// Pega aquí la URL de tu implementación de Google Apps Script.
+// Si aún no la tienes, el chat mostrará un campo para ingresarla.
+// ================================================================
+
+// Línea 346 — cambia solo la URL larga:
+let GAS_URL = localStorage.getItem('cm_gas_url') || 'https://script.google.com/macros/s/AKfycby5tmLXhCgHkBHbl9AeBcgG_88Zex9h2bBzTJAvENjlrm2e8SzlGETyzKawHDurKeeI/exec';
+
+// ================================================================
+// SECCIÓN 2: CATÁLOGO LOCAL (solo para renderizar tarjetas visuales)
+// La IA consulta el catálogo REAL desde Google Sheets vía GAS+RAG.
+// ================================================================
+
+const IMG_PATH = 'imagenes/';
+
+const CAT = [
+  {id:'CAB-001',name:'Derby Clásico Liso',         cat:'formal', gen:'caballero',mat:'Cuero genuino',  price:72,sizes:'39-43',colors:['#1a1a1a','#6b3a1a','#3d1f00'],colorNames:'Negro, Café, Marrón',   emo:'👞'},
+  {id:'CAB-002',name:'Oxford Brogue Elegante',      cat:'formal', gen:'caballero',mat:'Cuero genuino',  price:78,sizes:'39-43',colors:['#1a1a1a','#6b3a1a','#c49a6c'],colorNames:'Negro, Café, Cognac',   emo:'👞'},
+  {id:'CAB-003',name:'Derby Café Premium',          cat:'formal', gen:'caballero',mat:'Cuero genuino',  price:75,sizes:'39-43',colors:['#c4862a','#c49a6c','#d4aa70'],colorNames:'Café, Camel, Tan',       emo:'👞'},
+  {id:'CAB-004',name:'Derby Texturizado Print',     cat:'casual', gen:'caballero',mat:'Cuerina premium',price:62,sizes:'39-43',colors:['#8b5e3c','#4a2c0a','#1a1a1a'],colorNames:'Café textura, Marrón',  emo:'👞'},
+  {id:'CAB-005',name:'Mocasín Caballero Clásico',   cat:'casual', gen:'caballero',mat:'Cuero genuino',  price:68,sizes:'39-43',colors:['#1a1a1a','#6b3a1a','#3d1f00','#c49a6c'],colorNames:'Negro, Café, Marrón, Cognac',emo:'🥿'},
+  {id:'CAB-007',name:'Chelsea Boot Caballero',      cat:'casual', gen:'caballero',mat:'Cuero genuino',  price:80,sizes:'39-43',colors:['#1a1a1a','#6b3a1a','#3d1f00'],colorNames:'Negro, Café, Marrón',   emo:'🥾'},
+  {id:'CAB-008',name:'Penny Loafer Caballero',      cat:'casual', gen:'caballero',mat:'Cuero genuino',  price:65,sizes:'39-43',colors:['#6b3a1a','#c49a6c','#3d1f00','#1a1a1a'],colorNames:'Café, Cognac, Marrón, Negro',emo:'🥿'},
+  {id:'DAM-001',name:'Sandalia Plataforma Plateada',cat:'fiesta', gen:'dama',     mat:'Cuerina premium',price:58,sizes:'36-41',colors:['#c0c0c0','#d4af37'],            colorNames:'Plateado, Dorado',     emo:'👡'},
+  {id:'DAM-002',name:'Sandalia Kitten con Piedras', cat:'fiesta', gen:'dama',     mat:'Cuerina premium',price:62,sizes:'36-41',colors:['#e8d5b7','#f5e6c8','#c0c0c0'], colorNames:'Nude, Champagne, Plateado',emo:'👡'},
+  {id:'DAM-003',name:'Sandalia Strappy Punta Fina', cat:'fiesta', gen:'dama',     mat:'Cuerina premium',price:60,sizes:'36-41',colors:['#e8d5b7','#d4af37','#1a1a1a'], colorNames:'Nude, Dorado, Negro',  emo:'👡'},
+  {id:'DAM-004',name:'Slingback Cocodrilo Negro',   cat:'formal', gen:'dama',     mat:'Cuerina premium',price:65,sizes:'36-41',colors:['#1a1a1a','#3d1f00'],            colorNames:'Negro, Marrón',        emo:'👠'},
+  {id:'DAM-005',name:'Slingback Nude Corazón',      cat:'casual', gen:'dama',     mat:'Cuerina premium',price:55,sizes:'36-41',colors:['#e8d5b7','#f0b8b8','#ffffff'], colorNames:'Nude, Rosa palo, Blanco',emo:'👠'},
+  {id:'DAM-006',name:'Pump Azul Marino Clásica',    cat:'formal', gen:'dama',     mat:'Cuerina premium',price:58,sizes:'36-41',colors:['#1a2d5a','#1a1a1a','#6b1a2d'], colorNames:'Azul marino, Negro, Burdeos',emo:'👠'},
+  {id:'DAM-007',name:'Slingback Burdeos Charol',    cat:'formal', gen:'dama',     mat:'Cuero charol',   price:70,sizes:'36-41',colors:['#6b1a2d','#1a1a1a','#3d1f00'], colorNames:'Burdeos, Negro, Café', emo:'👠'},
+  {id:'DAM-008',name:'Pump Crema Texturizada',      cat:'casual', gen:'dama',     mat:'Cuerina premium',price:52,sizes:'36-41',colors:['#f5ead0','#fffff0','#d4c5b0'], colorNames:'Crema, Blanco hueso, Topo',emo:'👠'},
+  {id:'DAM-009',name:'Loafer Azul Marino Hebilla',  cat:'casual', gen:'dama',     mat:'Cuerina premium',price:55,sizes:'36-41',colors:['#1a2d5a','#1a1a1a','#6b3a1a'], colorNames:'Azul marino, Negro, Café',emo:'🥿'},
+  {id:'DAM-010',name:'Loafer Marrón Clásico',       cat:'casual', gen:'dama',     mat:'Cuero genuino',  price:68,sizes:'36-41',colors:['#3d1f00','#1a1a1a','#c49a6c'], colorNames:'Marrón, Negro, Cognac', emo:'🥿'},
+  {id:'DAM-011',name:'Botín Tacón Cuadrado',        cat:'formal', gen:'dama',     mat:'Cuerina premium',price:72,sizes:'36-41',colors:['#1a1a1a','#6b3a1a','#d4aa70','#6b1a2d'],colorNames:'Negro, Café, Camel, Burdeos',emo:'👢'},
+  {id:'DAM-012',name:'Sandalia Plana Verano',       cat:'casual', gen:'dama',     mat:'Cuerina premium',price:38,sizes:'36-41',colors:['#ffffff','#e8d5b7','#6b3a1a','#1a1a1a'],colorNames:'Blanco, Nude, Café, Negro',emo:'🩴'}
+];
+
+// ================================================================
+// SECCIÓN 3: RENDER CATÁLOGO + IMÁGENES
+// ================================================================
+function imgOrEmoji(p){return`<img class="prod-photo" src="${IMG_PATH}${p.id}.jpg" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="pemo" style="display:none">${p.emo}</span>`;}
+function imgChat(p){return`<img class="cp-photo" src="${IMG_PATH}${p.id}.jpg" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="cp-emo" style="display:none">${p.emo}</span>`;}
+function rend(f){const g=document.getElementById('pgrid');g.innerHTML='';const list=f==='todos'?CAT:CAT.filter(p=>p.cat===f||p.gen===f||(f==='cuero'&&p.mat.toLowerCase().includes('cuero genuino')));list.forEach(p=>{const dots=p.colors.map(c=>`<span class="cdot" style="background:${c}" title="${p.colorNames}"></span>`).join('');const bc=p.cat==='formal'?'bf':p.cat==='casual'?'bc':'bfi';g.innerHTML+=`<div class="pcard" onclick="askP('${p.id}')"><div class="pimg">${imgOrEmoji(p)}<span class="pbg ${bc}">${p.cat}</span><span class="pgen">${p.gen}</span></div><div class="pinfo"><div class="pname">${p.name}</div><div class="pmat">${p.mat}</div><div class="pcolors">${dots}</div><div class="pfoot"><div><div class="pprice">$${p.price} <span>USD</span></div><div class="psz">Tallas: ${p.sizes}</div></div></div><button class="pcta" onclick="event.stopPropagation();askP('${p.id}')">Consultar al Asesor →</button></div></div>`;});}
+function filt(f,btn){document.querySelectorAll('.fb').forEach(b=>b.classList.remove('act'));btn.classList.add('act');rend(f);}
+rend('todos');
+
+// ================================================================
+// SECCIÓN 4: PARTÍCULAS
+// ================================================================
+const cv=document.getElementById('pcv'),cx=cv.getContext('2d');let pts=[];
+function rsz(){cv.width=window.innerWidth;cv.height=window.innerHeight;}rsz();window.addEventListener('resize',rsz);
+for(let i=0;i<55;i++)pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*2+.5,o:Math.random()*.35+.1});
+function ap(){cx.clearRect(0,0,cv.width,cv.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=cv.width;if(p.x>cv.width)p.x=0;if(p.y<0)p.y=cv.height;if(p.y>cv.height)p.y=0;cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(201,169,110,${p.o})`;cx.fill();});requestAnimationFrame(ap);}ap();
+
+// ================================================================
+// SECCIÓN 5: ESTADO CHAT + FLUJO DE COMPRA
+// ================================================================
+
+let hist = [];
+let proofImageB64 = null;  // comprobante en base64
+let pendingOrder  = {};    // producto, talla, color, precio
+
+function openChat(){
+  document.getElementById('cwin').classList.add('open');
+  document.querySelector('.cbadge').style.display='none';
+  if(!hist.length) welcome();
+}
+function closeChat(){document.getElementById('cwin').classList.remove('open');}
+function tnow(){return new Date().toLocaleTimeString('es-EC',{hour:'2-digit',minute:'2-digit'});}
+
+function welcome(){
+  if(!GAS_URL){
+    showGasConfig();
+    return;
+  }
+  addMsg('bot','¡Hola! Soy <strong>Martín</strong>, tu asesor de Calzado Martini. 👟<br><br>¿En qué puedo ayudarte? Cuéntame qué tipo de calzado buscas.',tnow());
+}
+
+// ── Mostrar config GAS si no está configurado ──
+function showGasConfig(){
+  const el=document.getElementById('cmsgs');
+  const d=document.createElement('div');
+  d.className='msg bot';
+  d.innerHTML=`<div class="mbub"><strong>⚙️ Configurar Asesor</strong><br><small>Ingresa la URL de tu Google Apps Script:</small></div>
+  <div class="gas-config">
+    <small>URL de implementación (Apps Script):</small>
+    <input type="text" id="gas-input" placeholder="https://script.google.com/macros/s/.../exec">
+    <button onclick="saveGasUrl()">Activar Asesor</button>
+  </div>`;
+  el.appendChild(d); el.scrollTop=el.scrollHeight;
+}
+function saveGasUrl(){
+  const url=document.getElementById('gas-input').value.trim();
+  if(url.startsWith('https://script.google.com')){
+    GAS_URL=url;localStorage.setItem('cm_gas_url',url);
+    document.getElementById('cmsgs').innerHTML='';
+    addMsg('bot','✅ ¡Asesor activado! Ahora consulto el catálogo en tiempo real. ¿En qué puedo ayudarte?',tnow());
+  }else{alert('URL inválida. Debe comenzar con https://script.google.com');}
+}
+
+// ── Añadir mensaje al chat ──
+function addMsg(type,html,time){
+  const el=document.getElementById('cmsgs');
+  const d=document.createElement('div');d.className='msg '+type;
+  const rx=/\[PROD:([A-Z]{3}-\d{3})\]/g;let m,cards='',txt=html;
+  while((m=rx.exec(html))!==null){const p=CAT.find(x=>x.id===m[1]);if(p){txt=txt.replace(m[0],'');cards+=`<div class="cprod"><div class="cpimg">${imgChat(p)}</div><div class="cpinfo"><div class="cpname">${p.name}</div><div class="cpdet">${p.mat} &middot; Tallas ${p.sizes}</div><div class="cpdet" style="color:#4a4a6a">${p.colorNames}</div><div class="cpprice">$${p.price} USD</div></div></div>`;}}
+  if(txt.trim())d.innerHTML+=`<div class="mbub">${txt.trim()}</div>`;
+  if(cards)d.innerHTML+=cards;
+  d.innerHTML+=`<span class="mtime">${time}</span>`;
+  // Feedback 👍/👎 solo en mensajes del bot con contenido real
+  if(type==='bot' && time && txt.trim()){
+    d.innerHTML+=`<div class="fbk"><span>¿Útil?</span><button class="fbn" onclick="sendFeedback(this,true)">👍</button><button class="fbn" onclick="sendFeedback(this,false)">👎</button></div>`;
+  }
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+}
+function showT(){if(document.getElementById('typ'))return;const el=document.getElementById('cmsgs');const d=document.createElement('div');d.className='msg bot';d.id='typ';d.innerHTML='<div class="mbub"><div class="tdots"><span></span><span></span><span></span></div></div>';el.appendChild(d);el.scrollTop=el.scrollHeight;}
+function hideT(){const t=document.getElementById('typ');if(t)t.remove();}
+
+// ── Carrito visible: tarjeta resumen del pedido ──
+function showCartSummary(items){
+  const el=document.getElementById('cmsgs');
+  const d=document.createElement('div');d.className='msg bot';
+  const cartTotal=items.reduce((s,i)=>s+parseFloat(i.price||0),0).toFixed(2);
+  const lines=items.map(i=>`<div class="cart-item"><span>👟 <strong>${i.product}</strong> — T.${i.size} · ${i.color}</span><span class="cart-price">$${i.price}</span></div>`).join('');
+  d.innerHTML=`<div class="cart-box"><div class="cart-title">🛒 Tu pedido confirmado</div>${lines}<div class="cart-total">Total: $${cartTotal} USD</div></div><span class="mtime">${tnow()}</span>`;
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+}
+
+// ── Feedback 👍/👎 ──
+async function sendFeedback(btn,positive){
+  const fbkDiv=btn.closest('.fbk');
+  if(!fbkDiv)return;
+  // Marcar botón elegido visualmente
+  fbkDiv.querySelectorAll('.fbn').forEach(b=>b.classList.remove('voted'));
+  btn.classList.add('voted');
+  fbkDiv.querySelector('span').textContent=positive?'✅ ¡Gracias!':'📝 Anotado, mejoraremos.';
+  fbkDiv.querySelectorAll('.fbn').forEach(b=>{if(!b.classList.contains('voted'))b.style.display='none';});
+  // Guardar siempre en GAS (positivos y negativos)
+  if(GAS_URL){
+    const msgText=btn.closest('.msg')?.querySelector('.mbub')?.innerText||'';
+    try{
+      await fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},
+        body:JSON.stringify({action:'feedback',message:msgText,positive:positive})});
+    }catch(e){console.warn('Feedback error:',e);}
+  }
+}
+
+// ================================================================
+// SECCIÓN 6: FLUJO DE COMPRA — UI de comprobante y datos
+// ================================================================
+
+// ── Mostrar caja de subida del comprobante ──
+function showUploadProof(){
+  const el=document.getElementById('cmsgs');
+  const d=document.createElement('div');
+  d.className='msg bot'; d.id='upload-ui';
+  d.innerHTML=`
+    <div class="upload-box" id="upload-box">
+      <label for="proof-file">📷 Seleccionar comprobante de transferencia</label>
+      <input type="file" id="proof-file" accept="image/*" onchange="handleProofFile(event)">
+      <img id="proof-preview" class="proof-preview" style="display:none">
+      <button class="ubtn" id="ubtn" onclick="sendProof()" disabled>Enviar comprobante ↑</button>
+    </div>
+    <span class="mtime">${tnow()}</span>`;
+  el.appendChild(d); el.scrollTop=el.scrollHeight;
+}
+
+function handleProofFile(e){
+  const file=e.target.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    proofImageB64=ev.target.result;
+    const prev=document.getElementById('proof-preview');
+    prev.src=proofImageB64; prev.style.display='block';
+    document.getElementById('ubtn').disabled=false;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function sendProof(){
+  const btn=document.getElementById('ubtn');
+  btn.disabled=true; btn.textContent='Enviando…';
+  // El comprobante se guarda al final junto con los datos del pedido
+  // Por ahora solo confirmamos la recepción para continuar el flujo
+  const uiEl=document.getElementById('upload-ui');
+  if(uiEl) uiEl.remove();
+  addMsg('user','[Comprobante de pago enviado ✓]',tnow());
+  hist.push({role:'user',content:'He subido el comprobante de pago.'});
+  // Siguiente turno: Groq pide los datos del cliente [SOLICITAR_DATOS]
+  await sendToGas('He subido el comprobante de pago.');
+}
+
+// ── Mostrar formulario de datos del cliente ──
+function showCustomerForm(){
+  const el=document.getElementById('cmsgs');
+  const d=document.createElement('div');
+  d.className='msg bot'; d.id='form-ui';
+  d.innerHTML=`
+    <div class="customer-form">
+      <label>Nombre completo</label>
+      <input type="text" id="cf-name" placeholder="Ej. Juan Pérez">
+      <label>Número de cédula / CI</label>
+      <input type="text" id="cf-cedula" placeholder="Ej. 1800123456">
+      <label>Correo electrónico</label>
+      <input type="email" id="cf-email" placeholder="correo@ejemplo.com">
+      <label>Número de celular</label>
+      <input type="tel" id="cf-phone" placeholder="Ej. 0987654321">
+      <label>Dirección de envío (o URL Google Maps)</label>
+      <input type="text" id="cf-address" placeholder="Ej. Calle Bolívar y 5 de Junio, Cevallos, Tungurahua">
+      <button class="sbtn" onclick="submitCustomerData()">Confirmar datos y registrar pedido →</button>
+    </div>
+    <span class="mtime">${tnow()}</span>`;
+  el.appendChild(d); el.scrollTop=el.scrollHeight;
+}
+
+async function submitCustomerData(){
+  const name    = document.getElementById('cf-name').value.trim();
+  const cedula  = document.getElementById('cf-cedula').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const phone   = document.getElementById('cf-phone').value.trim();
+  const address = document.getElementById('cf-address').value.trim();
+
+  if(!name||!cedula||!email||!phone||!address){
+    alert('Por favor completa todos los campos, incluida la dirección de envío.'); return;
+  }
+
+  const formEl=document.getElementById('form-ui');
+  if(formEl) formEl.remove();
+
+  addMsg('user',`Mis datos: ${name} | CI: ${cedula} | ${email} | ${phone} | 📍 ${address}`,tnow());
+  hist.push({role:'user',content:`Mis datos de contacto: Nombre: ${name}, Cédula: ${cedula}, Correo: ${email}, Celular: ${phone}, Dirección de envío: ${address}`});
+
+  // Guardar pedido en GAS (Sheets + Drive)
+  await saveOrderToGas({name, cedula, email, phone, direccion: address});
+
+  // Continuar conversación con Groq para confirmación final
+  await sendToGas(`Mis datos de contacto: Nombre: ${name}, Cédula: ${cedula}, Correo: ${email}, Celular: ${phone}, Dirección de envío: ${address}`);
+}
+
+// ── Guardar pedido en Google Apps Script ──
+async function saveOrderToGas(customer){
+  if(!GAS_URL) return;
+  const summary = hist.map(m=>`[${m.role==='user'?'Cliente':'Martín'}]: ${m.content}`).join('\n\n');
+  try{
+    await fetch(GAS_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({
+        action:   'save_order',
+        order:    pendingOrder,
+        customer: customer,
+        image:    proofImageB64 || '',
+        summary:  summary
+      })
+    });
+  }catch(e){ console.warn('Error al guardar pedido:', e); }
+}
+
+// ── Bloque de confirmación final ──
+function showOrderConfirm(){
+  const el=document.getElementById('cmsgs');
+  const d=document.createElement('div');
+  d.className='msg bot';
+  d.innerHTML=`
+    <div class="order-confirm">
+      <div class="oc-icon">✅</div>
+      <h4>¡Pedido registrado!</h4>
+      <p>Hemos recibido tu pedido y comprobante de pago.<br>Te notificaremos al correo y celular cuando tu pedido sea despachado. ¡Gracias por confiar en Calzado Martini!</p>
+    </div>
+    <span class="mtime">${tnow()}</span>`;
+  el.appendChild(d); el.scrollTop=el.scrollHeight;
+  // Limpiar estado de compra
+  proofImageB64 = null;
+  pendingOrder  = {};
+}
+
+// ================================================================
+// SECCIÓN 7: ENVÍO AL GOOGLE APPS SCRIPT (RAG + GROQ)
+// ================================================================
+
+async function send(){
+  const inp=document.getElementById('ci');
+  const txt=inp.value.trim();
+  if(!txt) return;
+  if(!GAS_URL){ openChat(); return; }
+
+  addMsg('user',txt,tnow());
+  inp.value=''; inp.style.height='auto';
+  document.getElementById('sb').disabled=true;
+  document.getElementById('csugg').style.display='none';
+  hist.push({role:'user',content:txt});
+  showT();
+
+  await sendToGas(txt);
+  document.getElementById('sb').disabled=false;
+}
+
+async function sendToGas(message){
+  showT();
+  try{
+    const r=await fetch(GAS_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({
+        action:  'chat',
+        message: message,
+        history: hist.slice(-8)
+      })
+    });
+    const data=await r.json();
+    hideT();
+
+    if(!r.ok||data.error){
+      addMsg('bot','⚠️ Error del asesor: '+(data.error||'respuesta inesperada'),tnow());
+      return;
+    }
+
+    let reply = data.response || '';
+
+    // ── Renderizar imagen de producto si el modelo la incluyó ──
+    reply = reply.replace(/\[IMG:([^\]]+)\]/g, (_, path) =>
+      `<img src="${path}" alt="" style="max-width:200px;width:100%;border-radius:8px;margin:4px 0 8px;display:block;" onerror="this.remove()">`
+    );
+
+    // ── Capturar datos del pedido del marcador [PEDIDO:...] ──
+    if(reply.includes('[PEDIDO:')){
+      const pedMatch = reply.match(/\[PEDIDO:([^\]]+)\]/);
+      if(pedMatch){
+        const items = pedMatch[1].split('§').map(itm => {
+          const p = itm.split('|');
+          return { product: (p[0]||'').trim(), size: (p[1]||'').trim(), color: (p[2]||'').trim(), price: (p[3]||'').trim() };
+        });
+        pendingOrder = { items: items };
+        reply = reply.replace(/\[PEDIDO:[^\]]+\]/, '').trim();
+        // ── Mostrar tarjeta de carrito ──
+        showCartSummary(items);
+      }
+    }
+
+    // ── Detectar y manejar tokens de flujo de compra ──
+
+    if(reply.includes('[SOLICITAR_PAGO]')){
+      reply = reply.replace('[SOLICITAR_PAGO]','').trim();
+      // Los datos bancarios vienen en el texto de Groq; solo limpiamos el token
+    }
+
+    if(reply.includes('[SOLICITAR_COMPROBANTE]')){
+      reply = reply.replace('[SOLICITAR_COMPROBANTE]','').trim();
+      hist.push({role:'assistant',content:reply});
+      addMsg('bot',reply,tnow());
+      showUploadProof();
+      return;
+    }
+
+    if(reply.includes('[SOLICITAR_DATOS]')){
+      reply = reply.replace('[SOLICITAR_DATOS]','').trim();
+      hist.push({role:'assistant',content:reply});
+      addMsg('bot',reply,tnow());
+      showCustomerForm();
+      return;
+    }
+
+    if(reply.includes('[PEDIDO_REGISTRADO]')){
+      reply = reply.replace('[PEDIDO_REGISTRADO]','').trim();
+      hist.push({role:'assistant',content:reply});
+      if(reply) addMsg('bot',reply,tnow());
+      showOrderConfirm();
+      return;
+    }
+
+    hist.push({role:'assistant',content:reply});
+    addMsg('bot',reply,tnow());
+
+  }catch(e){
+    hideT();
+    addMsg('bot','⚠️ No se pudo conectar con el asesor. Verifica que el Apps Script esté activo.',tnow());
+  }
+}
+
+function useSug(btn){document.getElementById('ci').value=btn.textContent;send();}
+function askP(id){const p=CAT.find(x=>x.id===id);if(!p)return;openChat();document.getElementById('ci').value='Cuéntame más sobre el '+p.name;send();}
+function hkey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+function aH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+
+window.addEventListener('scroll',()=>{document.querySelector('nav').style.height=window.scrollY>50?'60px':'72px';});
+</script>
+</body>
+</html>

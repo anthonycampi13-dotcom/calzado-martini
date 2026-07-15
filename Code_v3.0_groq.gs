@@ -22,7 +22,7 @@ const SPREADSHEET_ID = '_SPREADSHEET_ID_';
 const SHEET_CATALOG     = 'Productos';
 const SHEET_ORDERS      = 'Pedidos';
 const DRIVE_FOLDER_NAME = 'Comprobantes Martini';
-const OWNER_EMAIL       = 'anthonycampi14@gmail.com'; // Correo del propietario para notificaciones
+const OWNER_EMAIL       = '_OWNER_EMAIL_'; // Correo del propietario para notificaciones
 
 // Clave de caché para embeddings del catálogo (se regenera cada 6 horas)
 const EMBED_CACHE_KEY = 'cm_catalog_embeddings_v1';

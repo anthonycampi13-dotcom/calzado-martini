@@ -1,7 +1,8 @@
 ﻿/**
  * ============================================================
  *  CALZADO MARTINI — Asistente Virtual con Groq API + RAG Semántico
- *  Google Apps Script  ·  v2.1  ·  2025
+ *  Google Apps Script  ·  v3.0  ·  2026
+ *  EVOLUCIÓN TÉCNICA — no validada en la prueba piloto
  * ============================================================
  * *   Completar COHERE_API_KEY, GROQ_API_KEY y SPREADSHEET_ID
  * ============================================================

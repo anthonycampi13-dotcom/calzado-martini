@@ -1,25 +1,8 @@
 /**
  * ============================================================
- *  CALZADO MARTINI — Asistente Virtual con Groq API + RAG
- *  Google Apps Script  ·  v2.0  ·  2025
- * ============================================================
- *
- * INSTRUCCIONES DE DESPLIEGUE:
- *   1. Abre tu Google Sheet con el catálogo de productos
- *   2. Ve a Extensiones → Apps Script
- *   3. Pega TODO este código (reemplaza el existente)
- *   4. Completa los valores de la sección CONFIGURACIÓN abajo
- *   5. Haz clic en "Implementar" → "Nueva implementación"
- *      · Tipo: Aplicación web
- *      · Ejecutar como: Yo (tu cuenta)
- *      · Quién tiene acceso: Cualquier persona
- *   6. Copia la URL de la implementación y pégala en el HTML
- *      (constante GAS_URL, línea ~10 del bloque de scripts)
- *
- * ESTRUCTURA REQUERIDA EN GOOGLE SHEETS:
- *   Hoja "Productos" con columnas:
- *     id | nombre | categoria | genero | material | precio | tallas | colores | emoji
- *   Hoja "Pedidos" (se crea automáticamente si no existe)
+ * CALZADO MARTINI — Asistente Virtual con Groq API + RAG léxico ligero
+ *  Google Apps Script  ·  v2.2.0  ·  2026
+ *  PROTOTIPO EVALUADO en la prueba piloto (n = 5)
  * ============================================================
  */
 
